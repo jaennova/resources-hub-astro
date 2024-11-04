@@ -1,0 +1,140 @@
+---
+import type { Resource } from '../data/resources';
+
+interface Props {
+  resource: Resource;
+}
+
+const { resource } = Astro.props;
+const tags = resource.tags === '-' ? [] : resource.tags.split(',').map(tag => tag.trim());
+---
+
+<div class="resource-card">
+  <div class="card-header">
+    <i class="ph ph-link"></i>
+    <h3>{resource.title}</h3>
+  </div>
+  <p>{resource.description}</p>
+  {tags.length > 0 && (
+    <div class="tags">
+      {tags.map(tag => (
+        <span class="tag">
+          <i class="ph ph-hash"></i>
+          {tag}
+        </span>
+      ))}
+    </div>
+  )}
+  <div class="card-footer">
+    <span class="category">
+      <i class="ph ph-folder"></i>
+      {resource.category}
+    </span>
+    <a href={resource.url} target="_blank" rel="noopener noreferrer">
+      Visit
+      <i class="ph ph-arrow-right"></i>
+    </a>
+  </div>
+</div>
+
+<style>
+  .resource-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid var(--primary-light);
+  }
+
+  .resource-card:hover {
+    transform: translateY(-4px);
+    background: var(--card-hover);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-header i {
+    font-size: 1.5rem;
+    color: var(--accent);
+  }
+
+  h3 {
+    margin: 0;
+    color: var(--text);
+    font-size: 1.25rem;
+  }
+
+  p {
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tag {
+    background: var(--primary-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .tag i {
+    font-size: 0.875rem;
+    color: var(--accent);
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .category {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text);
+    opacity: 0.8;
+    font-size: 0.875rem;
+  }
+
+  .category i {
+    color: var(--accent);
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    background: var(--primary);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+  }
+
+  a:hover {
+    background: var(--primary-light);
+  }
+</style>

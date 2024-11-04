@@ -1,0 +1,69 @@
+---
+interface Props {
+  categories: string[];
+  activeCategory: string;
+}
+
+const { categories, activeCategory } = Astro.props;
+---
+
+<div class="category-filter">
+  <a 
+    href="/resources" 
+    class={`category-btn ${activeCategory === 'all' ? 'active' : ''}`}
+  >
+    <i class="ph ph-squares-four"></i>
+    All Resources
+  </a>
+  {categories.map(category => (
+    <a 
+      href={`/resources/${category.toLowerCase().replace(' ', '-')}`}
+      class={`category-btn ${activeCategory === category.toLowerCase() ? 'active' : ''}`}
+    >
+      <i class="ph ph-folder-simple"></i>
+      {category}
+    </a>
+  ))}
+</div>
+
+<style>
+  .category-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: var(--primary);
+    border-radius: 12px;
+  }
+
+  .category-btn {
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    background: var(--primary-light);
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .category-btn i {
+    font-size: 1.25rem;
+  }
+
+  .category-btn:hover {
+    background: var(--secondary);
+    transform: translateY(-2px);
+  }
+
+  .category-btn.active {
+    background: var(--accent);
+    color: var(--primary);
+  }
+
+  .category-btn.active i {
+    color: var(--primary);
+  }
+</style>

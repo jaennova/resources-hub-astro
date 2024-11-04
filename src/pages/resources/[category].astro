@@ -1,0 +1,64 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ResourceCard from '../../components/ResourceCard.astro';
+import CategoryFilter from '../../components/CategoryFilter.astro';
+import { getResources, type Resource } from '../../data/resources';
+
+export async function getStaticPaths() {
+  const resources = await getResources();
+  const categories = [...new Set(resources.map(r => r.category))];
+  return categories.map(category => ({
+    params: { category: category.toLowerCase().replace(' ', '-') },
+    props: { category }
+  }));
+}
+
+const { category } = Astro.props;
+const resources = await getResources();
+const filteredResources = resources.filter(r => r.category === category);
+const categories = [...new Set(resources.map(r => r.category))];
+---
+
+<Layout title={`${category} Resources`}>
+  <main>
+    <h1><span class="text-gradient">{category}</span> Resources</h1>
+    <CategoryFilter categories={categories} activeCategory={category.toLowerCase()} />
+    
+    <div class="resources-grid">
+      {filteredResources.map(resource => (
+        <ResourceCard resource={resource} />
+      ))}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 1200px;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+</style>

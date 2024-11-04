@@ -10,31 +10,102 @@ const { title } = Astro.props;
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
+		<meta
+			name="description"
+			content="Descubra recursos seleccionados para desarrolladores, diseñadores y creadores."
+		/>
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<script src="https://unpkg.com/@phosphor-icons/web"></script>
 		<title>{title}</title>
 	</head>
 	<body>
+		<nav class="navbar">
+			<div class="nav-content">
+				<a href="/" class="logo">
+					<i class="ph ph-cube"></i>
+					ResourceHub
+				</a>
+				<a href="/resources" class="nav-link">Descubre los recursos</a>
+			</div>
+		</nav>
 		<slot />
+		<footer>
+			<p>Hecho con <i class="ph ph-heart"></i> por Jaen Nova</p>
+		</footer>
 	</body>
 </html>
 <style is:global>
 	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
+		--primary: #282c34;
+		--primary-light: #313641;
+		--secondary: #424769;
+		--accent: #6c758a;
+		--background: #181a20;
+		--text: #f2f2f2;
+		--card-bg: #313641;
+		--card-hover: #424769;
 	}
 	html {
 		font-family: system-ui, sans-serif;
-		background: #13151a;
+		background: var(--background);
+		color: var(--text);
+	}
+	body {
+		margin: 0;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
+	.navbar {
+		background: var(--primary);
+		padding: 1rem 0;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
+	.nav-content {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 1rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.logo {
+		color: var(--accent);
+		text-decoration: none;
+		font-size: 1.5rem;
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.nav-link {
+		color: var(--text);
+		text-decoration: none;
+		padding: 0.5rem 1rem;
+		border-radius: 6px;
+		transition: all 0.2s ease;
+	}
+	.nav-link:hover {
+		background: var(--primary-light);
+	}
+	footer {
+		margin-top: auto;
+		padding: 2rem;
+		text-align: center;
+		background: var(--primary);
+	}
+	footer p {
+		margin: 0;
+		color: var(--text);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+	}
+	footer i {
+		color: var(--accent);
 	}
 	code {
 		font-family:

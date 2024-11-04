@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ResourceCard from '../../components/ResourceCard.astro';
+import CategoryFilter from '../../components/CategoryFilter.astro';
+import { getResources, type Resource } from '../../data/resources';
+
+const resources = await getResources();
+const categories = [...new Set(resources.map(r => r.category))];
+---
+
+<Layout title="Resources Hub">
+  <main>
+    <h1>Resources <span class="text-gradient">Hub</span></h1>
+    <CategoryFilter categories={categories} activeCategory="all" />
+    
+    <div class="resources-grid">
+      {resources.map(resource => (
+        <ResourceCard resource={resource} />
+      ))}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 1200px;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+</style>
