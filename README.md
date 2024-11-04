@@ -2,7 +2,7 @@
 
 Una aplicación web moderna y responsiva, creada con Astro, que sirve como una colección curada de recursos para desarrolladores, diseñadores y creadores. La aplicación cuenta con tarjetas dinámicas de recursos, filtrado por categorías y una hermosa interfaz de usuario con una paleta de colores personalizada.
 
-![Captura de pantalla Resources Hub](public/screenshot.png)
+![Captura de pantalla Resources Hub](public/resources-hub-main-screen.png)
 
 ## 🚀 Características
 
