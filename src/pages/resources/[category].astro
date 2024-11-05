@@ -5,13 +5,20 @@ import CategoryFilter from '../../components/CategoryFilter.astro';
 import { getResources, type Resource } from '../../data/resources';
 
 export async function getStaticPaths() {
-  const resources = await getResources();
-  const categories = [...new Set(resources.map(r => r.category))];
-  return categories.map(category => ({
-    params: { category: category.toLowerCase().replace(' ', '-') },
-    props: { category }
-  }));
+    const resources = await getResources();
+    if (!resources || resources.length === 0) {
+        console.warn("No resources found.");
+        return []; // Evita el fallo en caso de datos vacíos
+    }
+    const categories = [...new Set(resources.map(r => r.category))];
+    return categories
+        .filter(Boolean) // Filtra categorías nulas o vacías
+        .map(category => ({
+            params: { category: category.toLowerCase().replace(' ', '-') },
+            props: { category },
+        }));
 }
+
 
 const { category } = Astro.props;
 const resources = await getResources();
